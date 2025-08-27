@@ -22,4 +22,4 @@ def hello_world():
     print(df)
     return render_template('index.html', x=x, y=y)
 
-app.run('localhost', debug=True)
+app.run('0.0.0.0', debug=True)
