@@ -20,4 +20,8 @@ def hello_world():
             y.append(row['concentration'])
     return render_template('index.html', x=x, y=y)
 
+@app.route('/hello')
+def hello():
+    return "Hello World!"
+
 app.run('0.0.0.0', debug=True)
