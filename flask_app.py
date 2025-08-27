@@ -18,8 +18,6 @@ def hello_world():
         if row['monitordate'] == latest:
             x.append(f"{row['itemengname']}({row['itemunit']})")
             y.append(row['concentration'])
-    df = pd.read_html('https://zh.wikipedia.org/zh-tw/Wikipedia:%E7%BB%9F%E8%AE%A1')
-    print(df)
     return render_template('index.html', x=x, y=y)
 
 app.run('0.0.0.0', debug=True)
