@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>PyScript pd.read_csv 範例</title>
+     <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+      <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC';
+        }
+    </style>
+    <py-config>
+        # 載入 pandas 函式庫
+        packages = ["pandas", "matplotlib"]
+    </py-config>
+</head>
+<body>
+    <h1>從虛擬檔案系統讀取 CSV</h1>
+    <pre id="output"></pre>
+
+    <py-script>
+        import pandas as pd
+        from pyscript import display
+        import matplotlib.pyplot as plt
+        
+        # 解決負號顯示為方塊的問題
+        plt.rcParams['axes.unicode_minus'] = False
+        plt.plot({{x|tojson}}, {{y|tojson}})
+        plt.title('Hualien')
+        plt.xlabel('Gas')
+        plt.ylabel('Amount')
+        display(plt, target="output")
+
+        from pyodide.http import pyfetch
+        # 透過相對 URL 從伺服器下載檔案
+        response = await pyfetch('../static/aqx_p_250.csv')
+        
+        if response.ok:
+            # 將下載的檔案讀取為文字
+            text_data = await response.text()
+            
+            # 使用 pandas 讀取 CSV 文字
+            from io import StringIO
+            df = pd.read_csv(StringIO(text_data))
+            
+            display(df.head())
+    </py-script>
+</body>
+</html>
